@@ -6,6 +6,7 @@
 SoftwareSerial bluetooth(10, 11);
 
 char rev_char;
+bool fan_toggle;
 
 void setup() {
   Serial.begin(9600);
@@ -51,11 +52,14 @@ void loop() {
       Stop();
       break;
     case 'M'://เปิดพัดลม
-      analogWrite(fan, 0);
-      break;
-    case 'm'://ปิดพัดลม
-      analogWrite(fan, 255);
+      fan_toggle =! fan_toggle;
       break;
     }
+  }
+  if (fan_toggle){
+    analogWrite(fan, 0);
+  }
+  else if (!fan_toggle){
+    analogWrite(fan, 255);
   }
 }
